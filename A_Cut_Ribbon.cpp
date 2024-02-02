@@ -20,7 +20,7 @@ int main()
         }
         if(i>=c)
         {
-            z=dp[i-c];
+            z =dp[i-c];
         }
         dp[i]= 1+ max(x, max(y,z));
     }
