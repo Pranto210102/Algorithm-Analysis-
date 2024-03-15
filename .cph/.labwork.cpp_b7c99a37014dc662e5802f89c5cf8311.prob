@@ -1,0 +1,1 @@
+{"name":"Local: labwork","url":"d:\\Git Demo\\Algorithm-Analysis-\\labwork.cpp","tests":[{"id":1709109332456,"input":"","output":""},{"id":1709109335995,"input":"6 5\n0 1\n0 3\n1 2\n3 5\n5 4\n0","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Git Demo\\Algorithm-Analysis-\\labwork.cpp","group":"local","local":true}
