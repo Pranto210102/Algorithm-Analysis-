@@ -6,7 +6,7 @@ void print(int a[], int n)
     cout<<a[i]<<" ";
     cout<<endl;
 }
-void to_sort(int a[], int n)
+void to_sort(int *a, int n)
 {
      print(a, n); //before sort
 
