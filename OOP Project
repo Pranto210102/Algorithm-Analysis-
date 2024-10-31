@@ -1,1 +1,115 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Student {
+private:
+    string name;
+    int roll;
+    string department;
+    float cgpa;
+
+public:
+    Student(string n, int r, string d, float c) : name(n), roll(r), department(d), cgpa(c) {}
+    string getName() { return name; }
+    int getRoll() { return roll; }
+    string getDepartment() { return department; }
+    float getCgpa() { return cgpa; }
+    void display() {
+        cout << "Name: " << name << "\nRoll: " << roll << "\nDepartment: " << department << "\nCGPA: " << cgpa << endl;
+    }
+};
+
+class StudentManagement {
+private:
+    vector<Student> students;
+    const string filename = "students.txt";
+
+    void loadFromFile() {
+        ifstream file(filename);
+        string name, dept;
+        int roll;
+        float cgpa;
+        while (file >> name >> roll >> dept >> cgpa) {
+            students.emplace_back(name, roll, dept, cgpa);
+        }
+    }
+
+    void saveToFile() {
+        ofstream file(filename, ios::trunc);
+        for (auto &s : students) {
+            file << s.getName() << " " << s.getRoll() << " " << s.getDepartment() << " " << s.getCgpa() << endl;
+        }
+    }
+
+public:
+    StudentManagement() { loadFromFile(); }
+
+    void addStudent(string name, int roll, string department, float cgpa) {
+        students.emplace_back(name, roll, department, cgpa);
+        saveToFile();
+    }
+
+    void deleteStudentByName(string name) {
+        students.erase(remove_if(students.begin(), students.end(),
+                    [&](Student &s) { return s.getName() == name; }), students.end());
+        saveToFile();
+    }
+
+    void searchStudentByName(string name) {
+        for (auto &s : students) {
+            if (s.getName() == name) {
+                s.display();
+                return;
+            }
+        }
+        cout << "Student not found!" << endl;
+    }
+
+    void displayAllStudents() {
+        for (auto &s : students) s.display();
+    }
+};
+
+int main() {
+    StudentManagement sm;
+    int choice;
+    string name, dept;
+    int roll;
+    float cgpa;
+
+    do {
+        cout << "\n1. Add Student\n2. Search Student\n3. Delete Student\n4. Display All\n5. Exit\nChoice: ";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                cout << "Enter Name, Roll, Department, CGPA: ";
+                cin >> name >> roll >> dept >> cgpa;
+                sm.addStudent(name, roll, dept, cgpa);
+                break;
+            case 2:
+                cout << "Enter Name to Search: ";
+                cin >> name;
+                sm.searchStudentByName(name);
+                break;
+            case 3:
+                cout << "Enter Name to Delete: ";
+                cin >> name;
+                sm.deleteStudentByName(name);
+                break;
+            case 4:
+                sm.displayAllStudents();
+                break;
+            case 5:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid Choice!" << endl;
+        }
+    } while (choice != 5);
+
+    return 0;
+}
 
